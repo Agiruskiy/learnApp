@@ -75,6 +75,7 @@ function renderBox() {
     box.style.top = getRandom(0, maxTop) + 'px'
     box.style.left = getRandom(0, maxLeft) + 'px'
     box.style.cursor = 'pointer'
+    box.style.boxShadow = '0 0 5px 5px #ccc'
     box.setAttribute('data-box', 'true')
     gameBox.insertAdjacentElement("afterbegin", box)
 }
@@ -107,5 +108,5 @@ function  getRandom(min, max) {
 }
 
 function getRandomColor () {
-    return "#" + (Math.floor(Math.random() * 16577215)).toString(16)
+    return "#" + (Math.floor(Math.random() * 16777215)).toString(16)
 }
