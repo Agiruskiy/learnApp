@@ -7,11 +7,40 @@ let resultHeader = document.querySelector('#result-header')
 let inputTime = document.querySelector('#game-time')
 let setTime = document.querySelector("#checkbox")
 
+class RootElement {
+    constructor(tagName = 'div') {
+        this.$element = document.createElement(tagName)
+    }
+}
+
+class Box extends RootElement {
+    constructor(tagName){
+        super(tagName)
+    }
+    renderBox(gameSize, element){
+        element.innerHTML=''
+        let boxSize = getRandom(30,100)
+        let maxTop = gameSize.height - boxSize
+        let maxLeft = gameSize.width - boxSize
+        this.$element.style.height = this.$element.style.width = boxSize + 'px'
+        this.$element.style.position = 'absolute'
+        this.$element.style.backgroundColor = getRandomColor()
+        this.$element.style.top = getRandom(0, maxTop) + 'px'
+        this.$element.style.left = getRandom(0, maxLeft) + 'px'
+        this.$element.style.cursor = 'pointer'
+        this.$element.style.border = '1px solid #ccc'
+        this.$element.setAttribute('data-box', 'true')
+        element.insertAdjacentElement('afterbegin', this.$element)
+    }
+
+}
 
 
 let score = 0
 let isGameStarted = false
 let defaultTime = '5.0'
+let gameSize = gameBox.getBoundingClientRect()
+const renderer = new Box("div")
 
 startButton.addEventListener('click', startGame)
 gameBox.addEventListener('click', handleBoxClick)
@@ -45,8 +74,7 @@ function startGame() {
 
     }, 100)
 
-
-    renderBox()
+     renderer.renderBox(gameSize, gameBox)
 }
 
 function endGame() {
@@ -59,29 +87,6 @@ function endGame() {
     show(resultHeader)
     setScore()
     timer('default')
-
-
-
-
-}
-function renderBox() {
-    gameBox.innerHTML = ''
-
-    let box = document.createElement('div')
-    let boxSize = getRandom(30,100)
-    let gameSize = gameBox.getBoundingClientRect()
-    let maxTop = gameSize.height - boxSize
-    let maxLeft = gameSize.width - boxSize
-
-    box.style.height = box.style.width = boxSize + 'px'
-    box.style.position = 'absolute'
-    box.style.backgroundColor = getRandomColor()
-    box.style.top = getRandom(0, maxTop) + 'px'
-    box.style.left = getRandom(0, maxLeft) + 'px'
-    box.style.cursor = 'pointer'
-    box.style.border = '1px solid #ccc'
-    box.setAttribute('data-box', 'true')
-    gameBox.insertAdjacentElement("afterbegin", box)
 }
 
 function handleBoxClick(event) {
@@ -90,7 +95,7 @@ function handleBoxClick(event) {
     }
     if (event.target.dataset.box) {
         score++
-        renderBox()
+        renderer.renderBox(gameSize, gameBox)
     }
 }
 
