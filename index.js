@@ -79,7 +79,7 @@ function renderBox() {
     box.style.top = getRandom(0, maxTop) + 'px'
     box.style.left = getRandom(0, maxLeft) + 'px'
     box.style.cursor = 'pointer'
-    box.style.boxShadow = '0 0 5px 5px #ccc'
+    box.style.border = '1px solid #ccc'
     box.setAttribute('data-box', 'true')
     gameBox.insertAdjacentElement("afterbegin", box)
 }
