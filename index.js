@@ -5,15 +5,19 @@ let resultCounter = document.querySelector('#result')
 let timeHeader = document.querySelector('#time-header')
 let resultHeader = document.querySelector('#result-header')
 let inputTime = document.querySelector('#game-time')
+let setTime = document.querySelector("#checkbox")
 
 
 
 let score = 0
 let isGameStarted = false
+let defaultTime = '5.0'
 
 startButton.addEventListener('click', startGame)
 gameBox.addEventListener('click', handleBoxClick)
 inputTime.addEventListener('input', timer)
+setTime.addEventListener('input', changeDefault)
+
 function show(el) {
     el.classList.remove('hide')
 }
@@ -92,7 +96,7 @@ function handleBoxClick(event) {
 
 function timer(amount){
     if (amount === 'default') {
-        return timeCounter.textContent =  "5.0"
+        return timeCounter.textContent =  defaultTime
     } else {
         timeCounter.textContent = inputTime.value + '.0'
     }
@@ -101,6 +105,15 @@ function timer(amount){
 function setScore() {
     resultCounter.textContent = score.toString()
     score = 0
+}
+
+function changeDefault(){
+    if (setTime.checked){
+        defaultTime = inputTime.value + '.0'
+    } else {
+        defaultTime = '5.0'
+        inputTime.value = 5
+    }
 }
 
 function  getRandom(min, max) {
